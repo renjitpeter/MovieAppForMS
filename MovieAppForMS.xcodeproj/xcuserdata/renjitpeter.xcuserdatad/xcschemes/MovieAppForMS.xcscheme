@@ -5,6 +5,22 @@
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B3C18B6A1F56A31700D3F70A"
+               BuildableName = "MovieAppForMS.app"
+               BlueprintName = "MovieAppForMS"
+               ReferencedContainer = "container:MovieAppForMS.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
    </BuildAction>
    <TestAction
       buildConfiguration = "Debug"
@@ -12,7 +28,36 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B3C18B7E1F56A31800D3F70A"
+               BuildableName = "MovieAppForMSTests.xctest"
+               BlueprintName = "MovieAppForMSTests"
+               ReferencedContainer = "container:MovieAppForMS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B3C18B891F56A31800D3F70A"
+               BuildableName = "MovieAppForMSUITests.xctest"
+               BlueprintName = "MovieAppForMSUITests"
+               ReferencedContainer = "container:MovieAppForMS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B3C18B6A1F56A31700D3F70A"
+            BuildableName = "MovieAppForMS.app"
+            BlueprintName = "MovieAppForMS"
+            ReferencedContainer = "container:MovieAppForMS.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -26,6 +71,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B3C18B6A1F56A31700D3F70A"
+            BuildableName = "MovieAppForMS.app"
+            BlueprintName = "MovieAppForMS"
+            ReferencedContainer = "container:MovieAppForMS.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -35,6 +90,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B3C18B6A1F56A31700D3F70A"
+            BuildableName = "MovieAppForMS.app"
+            BlueprintName = "MovieAppForMS"
+            ReferencedContainer = "container:MovieAppForMS.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

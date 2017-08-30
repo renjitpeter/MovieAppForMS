@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		B3C18B6F1F56A31700D3F70A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C18B6E1F56A31700D3F70A /* AppDelegate.swift */; };
-		B3C18B711F56A31700D3F70A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C18B701F56A31700D3F70A /* ViewController.swift */; };
 		B3C18B741F56A31700D3F70A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3C18B721F56A31700D3F70A /* Main.storyboard */; };
 		B3C18B761F56A31700D3F70A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3C18B751F56A31700D3F70A /* Assets.xcassets */; };
 		B3C18B791F56A31700D3F70A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3C18B771F56A31700D3F70A /* LaunchScreen.storyboard */; };
 		B3C18B841F56A31800D3F70A /* MovieAppForMSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C18B831F56A31800D3F70A /* MovieAppForMSTests.swift */; };
 		B3C18B8F1F56A31800D3F70A /* MovieAppForMSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C18B8E1F56A31800D3F70A /* MovieAppForMSUITests.swift */; };
+		B3C18B9D1F56A86100D3F70A /* NowPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C18B9C1F56A86100D3F70A /* NowPlayingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +36,6 @@
 /* Begin PBXFileReference section */
 		B3C18B6B1F56A31700D3F70A /* MovieAppForMS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieAppForMS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3C18B6E1F56A31700D3F70A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B3C18B701F56A31700D3F70A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B3C18B731F56A31700D3F70A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B3C18B751F56A31700D3F70A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B3C18B781F56A31700D3F70A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +46,7 @@
 		B3C18B8A1F56A31800D3F70A /* MovieAppForMSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieAppForMSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3C18B8E1F56A31800D3F70A /* MovieAppForMSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAppForMSUITests.swift; sourceTree = "<group>"; };
 		B3C18B901F56A31800D3F70A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B3C18B9C1F56A86100D3F70A /* NowPlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NowPlayingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,11 +98,11 @@
 			isa = PBXGroup;
 			children = (
 				B3C18B6E1F56A31700D3F70A /* AppDelegate.swift */,
-				B3C18B701F56A31700D3F70A /* ViewController.swift */,
 				B3C18B721F56A31700D3F70A /* Main.storyboard */,
 				B3C18B751F56A31700D3F70A /* Assets.xcassets */,
 				B3C18B771F56A31700D3F70A /* LaunchScreen.storyboard */,
 				B3C18B7A1F56A31700D3F70A /* Info.plist */,
+				B3C18B9C1F56A86100D3F70A /* NowPlayingViewController.swift */,
 			);
 			path = MovieAppForMS;
 			sourceTree = "<group>";
@@ -262,7 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3C18B711F56A31700D3F70A /* ViewController.swift in Sources */,
+				B3C18B9D1F56A86100D3F70A /* NowPlayingViewController.swift in Sources */,
 				B3C18B6F1F56A31700D3F70A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
