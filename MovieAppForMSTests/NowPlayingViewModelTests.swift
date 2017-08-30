@@ -12,11 +12,10 @@ import XCTest
 class NowPlayingViewModelTests: XCTestCase {
     
     let dataManager:DataManagerProtocol = DataManagerMock()
-    
+
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        
     }
     
     override func tearDown() {
@@ -26,6 +25,17 @@ class NowPlayingViewModelTests: XCTestCase {
     
     func testFetchNowplayingMovie() {
         
+        let expectationForNowPlaying = expectation(description: "waitingForNowPlaying")
+        let viewModel:NowPlayingViewModel? = NowPlayingViewModel(dataManagerObj: dataManager) {
+            expectationForNowPlaying.fulfill()
+        }
+                                                                 
+        viewModel?.fetchNowplayingMovies()
+        
+        waitForExpectations(timeout: 1.0) { (_) -> Void in
+            XCTAssert((viewModel?.movieList.count)! > 0, "Data not returned correctly")
+            
+        }
     }
     
     
@@ -33,21 +43,10 @@ class NowPlayingViewModelTests: XCTestCase {
 
 class DataManagerMock: DataManagerProtocol {
     
-    func getNowPlayingMovies (completion : @escaping (responseDictionary?, String) -> ()){
-        let file = "NowPlayingDummy.rtf"
-        var responseData: Data?
+    func getNowPlayingMovies (completion : @escaping (responseDictionary?, String) -> ()){        
         var errorMessage = ""
         
-        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            
-            let path = dir.appendingPathComponent(file)
-            
-            do {
-                let responseString = try String(contentsOf: path, encoding: String.Encoding.utf8)
-                responseData = try JSONSerialization.data(withJSONObject: responseString, options: [])
-            }
-            catch {/* error handling here */}
-        }
+        let responseData: Data? = readJson(file: "NowPlayingDummy")
         
         var responseDictionary: responseDictionary?
         
@@ -68,6 +67,24 @@ class DataManagerMock: DataManagerProtocol {
     }
     func fetchImage(url:String, completion: @escaping (_ imageData:Data?, _ errorMessage:String?) -> Void) -> Void{
         
+    }
+    
+    private func readJson(file:String) -> Data?{
+        var data:Data?
+//        do {
+            let bundle = Bundle(for: type(of: self))
+            let path = bundle.path(forResource: file, ofType: "json")!
+            data = NSData(contentsOfFile: path) as Data?
+            
+//            if let file = Bundle.main.url(forResource: file, withExtension: "") {
+//                data = try Data(contentsOf: file)
+//            } else {
+//                print("no file")
+//            }
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+        return data
     }
 }
 

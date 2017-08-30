@@ -8,12 +8,73 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
-
 class NowPlayingViewController: UICollectionViewController {
 
     //MARK: - properties
-    fileprivate let reuseidentifier = "MovieCell"
     fileprivate let sectionInsets = UIEdgeInsets(top: 20.0, left: 20.0, bottom: 20.0, right: 20.0)
+    fileprivate var viewModel:NowPlayingViewModel!
+    fileprivate let itemsPerRow: CGFloat = 2
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        print("NowPlayingViewController : viewdid Load")
+        //initialize the viewModel passing it a closure to call when the viewModel has new data
+        //in this case, we pass in the view controller's reloadCollectionViewData method
+        viewModel = NowPlayingViewModel(reloadCollectionViewCallback: reloadCollectionViewData)
+        self.navigationItem.title = "Now Playing Movies"
+        
+    }
+    
+    //method is called by the viewModel when it has new data
+    func reloadCollectionViewData(){
+        
+        self.collectionView?.reloadData()
+        
+    }
+    
+}
+
+extension NowPlayingViewController {
+    
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return viewModel.numberOfSectionsInCollectionView()
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.numberOfItemsInSection(section: section)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView,
+                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return viewModel.setUpCollectionViewCell(indexPath: indexPath, collectionView : collectionView)
+        
+    }
+    
+    
+}
+
+extension NowPlayingViewController : UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+       
+        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
+        let availableWidth = view.frame.width - paddingSpace
+        let widthPerItem = availableWidth / itemsPerRow
+        
+        return CGSize(width: widthPerItem, height: widthPerItem+50)
+    }
+    
+   
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        return sectionInsets
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return sectionInsets.left
+    }
 }
