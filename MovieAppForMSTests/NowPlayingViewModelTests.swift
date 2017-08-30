@@ -71,19 +71,10 @@ class DataManagerMock: DataManagerProtocol {
     
     private func readJson(file:String) -> Data?{
         var data:Data?
-//        do {
-            let bundle = Bundle(for: type(of: self))
-            let path = bundle.path(forResource: file, ofType: "json")!
-            data = NSData(contentsOfFile: path) as Data?
+        let bundle = Bundle(for: type(of: self))
+        let path = bundle.path(forResource: file, ofType: "json")!
+        data = NSData(contentsOfFile: path) as Data?
             
-//            if let file = Bundle.main.url(forResource: file, withExtension: "") {
-//                data = try Data(contentsOf: file)
-//            } else {
-//                print("no file")
-//            }
-//        } catch {
-//            print(error.localizedDescription)
-//        }
         return data
     }
 }
