@@ -78,3 +78,25 @@ extension NowPlayingViewController : UICollectionViewDelegateFlowLayout {
         return sectionInsets.left
     }
 }
+
+extension NowPlayingViewController {
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        viewModel.setSelectedCellIndexPath(indexPath: indexPath)
+        performSegue(withIdentifier: "movieDetailsVC", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "movieDetailsVC"{
+            
+            let movieDetailsVC = segue.destination as! MovieDetailsViewController
+            
+            movieDetailsVC.viewModel = viewModel.getNextViewControllerViewModel()
+            
+        }
+    }
+    
+    
+}

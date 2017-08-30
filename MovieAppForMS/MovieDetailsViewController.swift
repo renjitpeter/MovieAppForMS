@@ -1,0 +1,61 @@
+//
+//  MovieDetailsViewController.swift
+//  MovieAppForMS
+//
+//  Created by Renjit Peter on 8/31/17.
+//  Copyright © 2017 Renjit Peter. All rights reserved.
+//
+
+import UIKit
+
+class MovieDetailsViewController: UIViewController {
+
+    @IBOutlet weak var posterImageView: UIImageView!
+    @IBOutlet weak var movieRating: UILabel!
+    @IBOutlet weak var noOfVotes: UILabel!
+    @IBOutlet weak var movieDescription: UITextView!
+    
+    var viewModel:MovieDetailsViewModel!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let movie = viewModel.getMovieDetails()
+        
+        self.navigationItem.title = movie.movieName
+        
+        var posterImage: UIImage?
+        
+        if let posterImageData = movie.posterImage {
+            posterImage = UIImage(data: posterImageData)
+        }
+        posterImageView.image = posterImage
+        if let avgVote = movie.avgVote {
+            movieRating.text = String(avgVote)
+        }
+        if let voteCount = movie.voteCount {
+            noOfVotes.text = String(voteCount)
+        }
+        if let overView = movie.overView {
+            movieDescription.text = overView
+        }
+        // Do any additional setup after loading the view.
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+}

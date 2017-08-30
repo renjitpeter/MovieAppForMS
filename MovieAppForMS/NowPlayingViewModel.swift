@@ -16,6 +16,7 @@ class NowPlayingViewModel:NSObject {
     fileprivate let reuseidentifier = "MovieCell"
     fileprivate let kNumberOfSectionsInCollectionView = 1
     fileprivate var dataManager:DataManagerProtocol?
+    fileprivate var selectedCellIndexPath : IndexPath!
     var movieList: [Movie] = []
     
     var reloadCollectionViewCallback : (()->())!
@@ -133,4 +134,23 @@ extension NowPlayingViewModel{
         return cell
     }
 
+}
+
+extension NowPlayingViewModel {
+    
+    func setSelectedCellIndexPath(indexPath : IndexPath){
+        
+        selectedCellIndexPath = indexPath
+        
+    }
+    
+    func getNextViewControllerViewModel() -> MovieDetailsViewModel {
+        
+        let movie = movieList[selectedCellIndexPath.row]
+        
+        let movieDetailsViewModel = MovieDetailsViewModel(selectedMovie: movie)
+        
+        return movieDetailsViewModel
+        
+    }
 }
