@@ -34,6 +34,7 @@ class NowPlayingViewController: UICollectionViewController {
     
 }
 
+//Extension for handling Collection view Data source
 extension NowPlayingViewController {
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -53,6 +54,7 @@ extension NowPlayingViewController {
     
 }
 
+//Extension for setting collection view layout
 extension NowPlayingViewController : UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView,
@@ -79,6 +81,7 @@ extension NowPlayingViewController : UICollectionViewDelegateFlowLayout {
     }
 }
 
+//Extension for handling navigation to detail view
 extension NowPlayingViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -89,6 +92,7 @@ extension NowPlayingViewController {
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         return false
+        // return false to prevent the sague from story board getting fired before collection didSelectItemAt indexpath is called
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

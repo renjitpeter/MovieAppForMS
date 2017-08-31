@@ -23,6 +23,7 @@ class DataManager: NSObject, DataManagerProtocol {
     var errorMessage = ""
 
 
+    // geth the list of all movies playing now
     func getNowPlayingMovies (completion : @escaping (responseDictionary?, String) -> ()) {
         
         print("Datamanger : getNowPlayingMovies")
@@ -35,6 +36,7 @@ class DataManager: NSObject, DataManagerProtocol {
         
     }
     
+    //Service for fetching movie details for provided movie id
     func getMovieDetails (movieID:Int, completion : @escaping (responseDictionary?, String) -> ()) {
         
         let movieURLString = movieURL+String(movieID)
@@ -47,7 +49,7 @@ class DataManager: NSObject, DataManagerProtocol {
         self.fetchData(url: url, completion: completion)
     }
     
-    
+    //Fetch the data and send the response data for processing based on the URL provided
     fileprivate func fetchData(url:URL, completion : @escaping (responseDictionary?, String) -> ()) {
         var responseData: responseDictionary?
         
@@ -68,6 +70,7 @@ class DataManager: NSObject, DataManagerProtocol {
         dataTask?.resume()
     }
     
+    //Generate URL required to fire APIs
     fileprivate func generateURL(_ forService:String) -> URL? {
         
         let urlString = baseURL+forService+"?api_key="+apiKey
@@ -78,6 +81,7 @@ class DataManager: NSObject, DataManagerProtocol {
         return url
     }
 
+    // Process the response data and convert to Dictionary
     fileprivate func processResponse(_ data:Data) -> responseDictionary? {
         var responseDictionary: responseDictionary?
         

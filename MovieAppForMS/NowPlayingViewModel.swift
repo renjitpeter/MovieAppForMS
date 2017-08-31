@@ -129,6 +129,7 @@ extension NowPlayingViewModel{
 
 }
 
+//For initialisation and navigation to detail view
 extension NowPlayingViewModel {
     
     func setSelectedCellIndexPath(indexPath : IndexPath){
