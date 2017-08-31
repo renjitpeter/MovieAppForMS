@@ -55,11 +55,21 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F76-hm-H9h">
+                                            <rect key="frame" x="64" y="246" width="58" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="58" id="pgV-tD-3o5"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                 </view>
                                 <constraints>
                                     <constraint firstItem="aw6-Hn-jVt" firstAttribute="top" secondItem="pKu-tb-0Ja" secondAttribute="top" id="7bd-el-MCS"/>
                                     <constraint firstAttribute="trailing" secondItem="dQD-bh-wKM" secondAttribute="trailing" constant="7" id="7or-Rg-H7Z"/>
+                                    <constraint firstItem="F76-hm-H9h" firstAttribute="top" secondItem="dQD-bh-wKM" secondAttribute="bottom" constant="2" id="AsC-3v-fgm"/>
                                     <constraint firstAttribute="trailing" secondItem="aw6-Hn-jVt" secondAttribute="trailing" id="Fb6-jD-b4I"/>
                                     <constraint firstAttribute="bottom" secondItem="Mtd-J6-oIz" secondAttribute="bottom" constant="4" id="Fkt-9k-ZwS"/>
                                     <constraint firstItem="Mtd-J6-oIz" firstAttribute="top" secondItem="dQD-bh-wKM" secondAttribute="bottom" constant="2" id="GAz-GN-eLL"/>
@@ -68,6 +78,8 @@
                                     <constraint firstItem="dQD-bh-wKM" firstAttribute="leading" secondItem="pKu-tb-0Ja" secondAttribute="leading" constant="7" id="Vwt-Ai-ytr"/>
                                     <constraint firstAttribute="trailing" secondItem="Mtd-J6-oIz" secondAttribute="trailing" constant="4" id="aYP-hK-iGd"/>
                                     <constraint firstItem="aw6-Hn-jVt" firstAttribute="leading" secondItem="pKu-tb-0Ja" secondAttribute="leading" id="dFW-2l-HgU"/>
+                                    <constraint firstAttribute="bottom" secondItem="F76-hm-H9h" secondAttribute="bottom" constant="4" id="eAe-4z-hDR"/>
+                                    <constraint firstAttribute="trailing" secondItem="F76-hm-H9h" secondAttribute="trailing" constant="28" id="xmZ-2x-EQX"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="movieName" destination="dQD-bh-wKM" id="ixf-id-QPq"/>

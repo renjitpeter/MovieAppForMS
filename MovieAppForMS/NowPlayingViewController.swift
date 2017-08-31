@@ -65,7 +65,7 @@ extension NowPlayingViewController : UICollectionViewDelegateFlowLayout {
         let availableWidth = view.frame.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
         
-        return CGSize(width: widthPerItem, height: widthPerItem+50)
+        return CGSize(width: widthPerItem, height: widthPerItem+120)
     }
     
    
