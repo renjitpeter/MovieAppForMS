@@ -26,7 +26,7 @@ class NowPlayingViewModelTests: XCTestCase {
     func testFetchNowplayingMovie() {
         
         let expectationForNowPlaying = expectation(description: "waitingForNowPlaying")
-        let viewModel:NowPlayingViewModel? = NowPlayingViewModel(dataManagerObj: dataManager) {
+        let viewModel:NowPlayingViewModel? = NowPlayingViewModel(dataManagerObj: dataManager) {_,_ in 
             expectationForNowPlaying.fulfill()
         }
         
@@ -41,30 +41,36 @@ class NowPlayingViewModelTests: XCTestCase {
 
 class DataManagerMock: DataManagerProtocol {
     
-    func getNowPlayingMovies (completion : @escaping (responseDictionary?, String) -> ()){        
-        var errorMessage = ""
+    var errorMessage = ""
+    
+    func getNowPlayingMovies (completion : @escaping (responseDictionary?, String) -> ()){
         
         let responseData: Data? = readJson(file: "NowPlayingDummy")
         
-        var responseDictionary: responseDictionary?
-        
-        if let responseData = responseData {
-            do {
-                responseDictionary = try JSONSerialization.jsonObject(with: responseData, options: []) as? responseDictionary
-            } catch let parseError as NSError {
-                errorMessage += "JSONSerialization error: \(parseError.localizedDescription)\n"
-            }
-        }
+        let responseDictionary = self.processResponse(responseData!)
         
         DispatchQueue.main.async {
-            completion(responseDictionary,errorMessage)
+            completion(responseDictionary,self.errorMessage)
         }
     }
     func getMovieDetails (movieID:Int, completion : @escaping (responseDictionary?, String) -> ()){
+        let responseData: Data? = readJson(file: "MovieDetails")
         
+        let responseDictionary = self.processResponse(responseData!)
+        
+        DispatchQueue.main.async {
+            completion(responseDictionary,self.errorMessage)
+        }
     }
-    func fetchImage(url:String, completion: @escaping (_ imageData:Data?, _ errorMessage:String?) -> Void) -> Void{
+    
+    func getCollectionDetails (collectionID:Int, completion : @escaping (responseDictionary?, String) -> ()) {
+        let responseData: Data? = readJson(file: "CollectionDetails")
         
+        let responseDictionary = self.processResponse(responseData!)
+        
+        DispatchQueue.main.async {
+            completion(responseDictionary,self.errorMessage)
+        }
     }
     
     private func readJson(file:String) -> Data?{
@@ -74,6 +80,20 @@ class DataManagerMock: DataManagerProtocol {
         data = NSData(contentsOfFile: path) as Data?
             
         return data
+    }
+    
+    // Process the response data and convert to Dictionary
+    fileprivate func processResponse(_ data:Data) -> responseDictionary? {
+        var responseDictionary: responseDictionary?
+        
+        do {
+            responseDictionary = try JSONSerialization.jsonObject(with: data, options: []) as? responseDictionary
+        } catch let parseError as NSError {
+            errorMessage += "JSONSerialization error: \(parseError.localizedDescription)\n"
+            return nil
+        }
+        
+        return responseDictionary
     }
 }
 

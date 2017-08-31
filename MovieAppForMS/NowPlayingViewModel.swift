@@ -17,21 +17,22 @@ class NowPlayingViewModel:NSObject {
     fileprivate let kNumberOfSectionsInCollectionView = 1
     fileprivate var dataManager:DataManagerProtocol?
     fileprivate var selectedCellIndexPath : IndexPath!
+    var isSelectedMovieAColletion = false
     var movieList: [Movie] = []
     
-    var reloadCollectionViewCallback : (()->())!
+    var reloadCollectionViewCallback : ((Bool,String)->())!
     
-    init(reloadCollectionViewCallback : @escaping (()->())) {
+    init(reloadCollectionViewCallback : @escaping ((Bool,String)->())) {
         
         super.init()
         self.reloadCollectionViewCallback = reloadCollectionViewCallback
-        dataManager = DataManager()
+        dataManager = DataManagerMock()
         self.fetchNowplayingMovies()
         
         print("NowPlayingViewModel : init ")
     }
     
-    init(dataManagerObj:DataManagerProtocol, reloadCollectionViewCallback : @escaping (()->())) {
+    init(dataManagerObj:DataManagerProtocol, reloadCollectionViewCallback : @escaping ((Bool,String)->())) {
         
         super.init()
         self.reloadCollectionViewCallback = reloadCollectionViewCallback
@@ -44,33 +45,37 @@ class NowPlayingViewModel:NSObject {
     func fetchNowplayingMovies() -> () {
         
         dataManager?.getNowPlayingMovies { (responseDictionary, error) in
-            guard let array = responseDictionary!["results"] as? [Any] else {
-                print("NowPlayingViewModel : no playing results empty ")
-                return
-            }
-            
-            for movieData in array{
-                if let movieData = movieData as? responseDictionary,
-                    let movieId = movieData["id"] as? Int,
-                    let movieName = movieData["title"] as? String {
-                    
-                    let movie = Movie(id: movieId, title: movieName)
-                    
-                    let avgVote = movieData["vote_average"] as? Float
-                    movie.avgVote = avgVote
-                    
-                    self.movieList.append(movie)
-                    
-                    if let imagePath = movieData["poster_path"] as? String {
-                        movie.imagePath = imagePath
-                    }
-                    
-                    self.fetchMovieDetails(movieId: movieId)
+            if let responseDictionary = responseDictionary {
+                guard let array = responseDictionary["results"] as? [Any] else {
+                    print("NowPlayingViewModel : no playing results empty ")
+                    return
                 }
                 
+                for movieData in array{
+                    if let movieData = movieData as? responseDictionary,
+                        let movieId = movieData["id"] as? Int,
+                        let movieName = movieData["title"] as? String {
+                        
+                        let movie = Movie(id: movieId, title: movieName)
+                        
+                        let avgVote = movieData["vote_average"] as? Float
+                        movie.avgVote = avgVote
+                        
+                        self.movieList.append(movie)
+                        
+                        if let imagePath = movieData["poster_path"] as? String {
+                            movie.imagePath = imagePath
+                        }
+                        
+                        self.fetchMovieDetails(movieId: movieId)
+                    }
+                    
+                }
+                print("NowPlayingViewModel : calling reload ")
+                self.reloadCollectionViewCallback(true,"")
+            } else {
+                self.reloadCollectionViewCallback(false,"Failed to fetch data. Please try later")
             }
-            print("NowPlayingViewModel : calling reload ")
-            self.reloadCollectionViewCallback()
         }
     }
     
@@ -79,6 +84,20 @@ class NowPlayingViewModel:NSObject {
     func fetchMovieDetails(movieId:Int) -> () {
         
         self.dataManager?.getMovieDetails(movieID: movieId, completion: { (responseDictionary, error)  in
+            let movieDetails: Movie? = self.movieList.filter({$0.movieId == movieId}).first
+            if let collactionDetails = responseDictionary!["belongs_to_collection"] as? responseDictionary{
+                movieDetails?.isCollection = true
+                movieDetails?.collectionID = collactionDetails["id"] as? Int
+            }
+            movieDetails?.overView = responseDictionary!["overview"] as? String
+            movieDetails?.voteCount = responseDictionary!["vote_count"] as? Int
+            
+        })
+    }
+    
+    func fetchCollectionDetails(collectionId:Int) -> () {
+        
+        self.dataManager?.getCollectionDetails(collectionID: collectionId, completion: { (responseDictionary, error)  in
             let movieDetails: Movie? = self.movieList.filter({$0.movieId == movieId}).first
             if let collactionDetails = responseDictionary!["belongs_to_collection"] as? responseDictionary{
                 movieDetails?.isCollection = true
@@ -136,6 +155,16 @@ extension NowPlayingViewModel {
         
         selectedCellIndexPath = indexPath
         
+        let movie = movieList[selectedCellIndexPath.row]
+        
+        if(movie.isCollection) {
+            isSelectedMovieAColletion = true
+            
+            
+            
+        }else{
+            isSelectedMovieAColletion = false
+        }
     }
     
     func getNextViewControllerViewModel() -> MovieDetailsViewModel {
@@ -146,5 +175,63 @@ extension NowPlayingViewModel {
         
         return movieDetailsViewModel
         
+    }
+}
+
+class DataManagerMock: DataManagerProtocol {
+    
+    var errorMessage = ""
+    
+    func getNowPlayingMovies (completion : @escaping (responseDictionary?, String) -> ()){
+        
+        let responseData: Data? = readJson(file: "NowPlayingDummy")
+        
+        let responseDictionary = self.processResponse(responseData!)
+        
+        DispatchQueue.main.async {
+            completion(responseDictionary,self.errorMessage)
+        }
+    }
+    func getMovieDetails (movieID:Int, completion : @escaping (responseDictionary?, String) -> ()){
+        let responseData: Data? = readJson(file: "MovieDetails")
+        
+        let responseDictionary = self.processResponse(responseData!)
+        
+        DispatchQueue.main.async {
+            completion(responseDictionary,self.errorMessage)
+        }
+    }
+    
+    func getCollectionDetails (collectionID:Int, completion : @escaping (responseDictionary?, String) -> ()) {
+        let responseData: Data? = readJson(file: "CollectionDetails")
+        
+        let responseDictionary = self.processResponse(responseData!)
+        
+        DispatchQueue.main.async {
+            completion(responseDictionary,self.errorMessage)
+        }
+    }
+    
+    private func readJson(file:String) -> Data?{
+        var data:Data?
+        let bundle = Bundle(for: type(of: self))
+        let path = bundle.path(forResource: file, ofType: "json")!
+        data = NSData(contentsOfFile: path) as Data?
+        
+        return data
+    }
+    
+    // Process the response data and convert to Dictionary
+    fileprivate func processResponse(_ data:Data) -> responseDictionary? {
+        var responseDictionary: responseDictionary?
+        
+        do {
+            responseDictionary = try JSONSerialization.jsonObject(with: data, options: []) as? responseDictionary
+        } catch let parseError as NSError {
+            errorMessage += "JSONSerialization error: \(parseError.localizedDescription)\n"
+            return nil
+        }
+        
+        return responseDictionary
     }
 }
