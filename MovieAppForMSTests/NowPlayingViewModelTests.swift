@@ -29,8 +29,6 @@ class NowPlayingViewModelTests: XCTestCase {
         let viewModel:NowPlayingViewModel? = NowPlayingViewModel(dataManagerObj: dataManager) {
             expectationForNowPlaying.fulfill()
         }
-                                                                 
-        viewModel?.fetchNowplayingMovies()
         
         waitForExpectations(timeout: 1.0) { (_) -> Void in
             XCTAssert((viewModel?.movieList.count)! > 0, "Data not returned correctly")
