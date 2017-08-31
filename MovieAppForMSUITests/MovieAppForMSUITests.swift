@@ -28,10 +28,42 @@ class MovieAppForMSUITests: XCTestCase {
         super.tearDown()
     }
     
-    func testAppLaunch() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testAppLaunchedCorrectly() {
+        let app = XCUIApplication()
+        let titleLabel = app.staticTexts["Now Playing Movies"]
+        XCTAssertEqual(titleLabel.exists, true)
         
+    }
+    
+    func testAppNavigationToDetails() {
+        let app = XCUIApplication()
+        let firstChild = app.collectionViews.children(matching:.any).element(boundBy: 0)
+        if firstChild.exists {
+            firstChild.tap()
+        }
+        
+        let trackInfoLabel = app.staticTexts["Rating :"]
+        XCTAssertEqual(trackInfoLabel.exists, true)
+        
+        let titleLabel = app.staticTexts["Now Playing Movies"]
+        XCTAssertEqual(titleLabel.exists, false)
+    }
+    
+    func testAppNavigationBackFromDetail() {
+        let app = XCUIApplication()
+        let firstChild = app.collectionViews.children(matching:.any).element(boundBy: 0)
+        if firstChild.exists {
+            firstChild.tap()
+        }
+        
+        let nowPlayingMoviesButton = app.navigationBars["MovieAppForMS.MovieDetailsView"].buttons["Now Playing Movies"]
+        nowPlayingMoviesButton.tap()
+        
+        let trackInfoLabel = app.staticTexts["Rating :"]
+        XCTAssertEqual(trackInfoLabel.exists, false)
+        
+        let titleLabel = app.staticTexts["Now Playing Movies"]
+        XCTAssertEqual(titleLabel.exists, true)
     }
     
 }
