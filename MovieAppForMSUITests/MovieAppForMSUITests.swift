@@ -41,9 +41,10 @@ class MovieAppForMSUITests: XCTestCase {
         if firstChild.exists {
             firstChild.tap()
         }
-        
-        let trackInfoLabel = app.staticTexts["Rating :"]
-        XCTAssertEqual(trackInfoLabel.exists, true)
+        if app.navigationBars["MovieAppForMS.MovieDetailsView"].exists {
+            let trackInfoLabel = app.staticTexts["Votes :"]
+            XCTAssertEqual(trackInfoLabel.exists, true)
+        }
         
         let titleLabel = app.staticTexts["Now Playing Movies"]
         XCTAssertEqual(titleLabel.exists, false)
@@ -56,14 +57,21 @@ class MovieAppForMSUITests: XCTestCase {
             firstChild.tap()
         }
         
-        let nowPlayingMoviesButton = app.navigationBars["MovieAppForMS.MovieDetailsView"].buttons["Now Playing Movies"]
-        nowPlayingMoviesButton.tap()
+        if app.navigationBars["MovieAppForMS.MovieDetailsView"].exists {
+            let nowPlayingMoviesButton = app.navigationBars["MovieAppForMS.MovieDetailsView"].buttons["Now Playing Movies"]
+            nowPlayingMoviesButton.tap()
+        }
+        else {
+            let nowPlayingMoviesButton = app.navigationBars["MovieAppForMS.CollectionView"].buttons["Now Playing Movies"]
+            nowPlayingMoviesButton.tap()
+        }
         
-        let trackInfoLabel = app.staticTexts["Rating :"]
+        let trackInfoLabel = app.staticTexts["Votes :"]
         XCTAssertEqual(trackInfoLabel.exists, false)
         
         let titleLabel = app.staticTexts["Now Playing Movies"]
         XCTAssertEqual(titleLabel.exists, true)
     }
+    
     
 }
