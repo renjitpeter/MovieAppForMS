@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import UIKit
+import UIKit.UIImage
 
 class Movie {
     let movieId: Int
@@ -15,7 +15,7 @@ class Movie {
     var avgVote : Float?
     var imagePath : String?
     var posterImage : UIImage?
-    var isCollection : Bool?
+    var isCollection : Bool = false
     var collectionID : Int?
     var overView : String?
     var voteCount : Int?

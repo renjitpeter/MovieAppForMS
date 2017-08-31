@@ -11,4 +11,5 @@ import Foundation
 protocol DataManagerProtocol {
     func getNowPlayingMovies (completion : @escaping (responseDictionary?, String) -> ())
     func getMovieDetails (movieID:Int, completion : @escaping (responseDictionary?, String) -> ())
+    func getCollectionDetails (collectionID:Int, completion : @escaping (responseDictionary?, String) -> ())
 }

@@ -13,6 +13,7 @@ let baseURL = "https://api.themoviedb.org/3"
 let imageBaseURL = "https://image.tmdb.org/t/p/w185"
 let nowPlayingURL = "/movie/now_playing"
 let movieURL = "/movie/"
+let collectionURL = "/collection/"
 
 typealias responseDictionary = [String: Any]
 
@@ -49,6 +50,19 @@ class DataManager: NSObject, DataManagerProtocol {
         self.fetchData(url: url, completion: completion)
     }
     
+    //Service for fetching movie details for provided movie id
+    func getCollectionDetails (collectionID:Int, completion : @escaping (responseDictionary?, String) -> ()) {
+        
+        let collectionURLString = collectionURL+String(collectionID)
+        
+        guard let url = generateURL(collectionURLString) else{
+            print("Datamanger : getCollectionDetails url failed")
+            return
+        }
+        
+        self.fetchData(url: url, completion: completion)
+    }
+    
     //Fetch the data and send the response data for processing based on the URL provided
     fileprivate func fetchData(url:URL, completion : @escaping (responseDictionary?, String) -> ()) {
         var responseData: responseDictionary?
@@ -56,7 +70,7 @@ class DataManager: NSObject, DataManagerProtocol {
         dataTask = defaultSession.dataTask(with: url, completionHandler: { (data, response, error) in
             if let error = error {
                 self.errorMessage = "service failed due to error :" + error.localizedDescription
-                print("Datamanger : feth data error" + self.errorMessage)
+                print("Datamanger : feth data error " + self.errorMessage)
                 
             }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                 responseData = self.processResponse(data)
