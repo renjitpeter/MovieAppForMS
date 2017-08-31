@@ -14,13 +14,9 @@ class MovieViewCell: UICollectionViewCell {
     @IBOutlet weak var movieName: UILabel!
     @IBOutlet weak var movieRating: UILabel!
     
-    func setMovieData(name: String, rating: String, poster: UIImage?){
+    func setMovieData(name: String, rating: String){
         movieName.text = name
         movieRating.text = rating
-        if let poster = poster {
-            posterImage.image = poster
-        } else {
-            posterImage.image = UIImage(named: "MovieIcon.png")
-        }
+        
     }
 }

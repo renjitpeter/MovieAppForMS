@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import UIKit
+import SDWebImage
 
 class MovieDetailsViewModel:NSObject {
     var movie:Movie?
@@ -17,6 +19,11 @@ class MovieDetailsViewModel:NSObject {
     }
     
     func getMovieDetails() -> Movie  {
+        let posterImageView = UIImageView()
+        if let imagePath = self.movie?.imagePath {
+            posterImageView.sd_setImage(with: URL(string: imageBaseURL + imagePath), placeholderImage: UIImage(named: "MovieIcon.png"))
+        }
+        movie?.posterImage = posterImageView.image
         return movie!
     }
 }

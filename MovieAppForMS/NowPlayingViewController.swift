@@ -87,6 +87,10 @@ extension NowPlayingViewController {
         performSegue(withIdentifier: "movieDetailsVC", sender: self)
     }
     
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        return false
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "movieDetailsVC"{

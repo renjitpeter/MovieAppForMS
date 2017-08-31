@@ -14,6 +14,7 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var movieRating: UILabel!
     @IBOutlet weak var noOfVotes: UILabel!
     @IBOutlet weak var movieDescription: UITextView!
+    @IBOutlet weak var movieTitle: UILabel!
     
     var viewModel:MovieDetailsViewModel!
 
@@ -22,14 +23,14 @@ class MovieDetailsViewController: UIViewController {
         
         let movie = viewModel.getMovieDetails()
         
-        self.navigationItem.title = movie.movieName
+        movieTitle.text = movie.movieName
         
-        var posterImage: UIImage?
+        var moviePosterImage: UIImage?
         
-        if let posterImageData = movie.posterImage {
-            posterImage = UIImage(data: posterImageData)
+        if let posterImage = movie.posterImage {
+            moviePosterImage = posterImage
         }
-        posterImageView.image = posterImage
+        posterImageView.image = moviePosterImage
         if let avgVote = movie.avgVote {
             movieRating.text = String(avgVote)
         }

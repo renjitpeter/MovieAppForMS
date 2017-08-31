@@ -63,8 +63,6 @@ class NowPlayingViewModel:NSObject {
                     
                     if let imagePath = movieData["poster_path"] as? String {
                         movie.imagePath = imagePath
-                        
-//                        self.fetchMoviePosterImage(movieId: movieId, imagePath: imagePath)
                     }
                     
                     self.fetchMovieDetails(movieId: movieId)
@@ -115,18 +113,13 @@ extension NowPlayingViewModel{
         
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseidentifier, for: indexPath as IndexPath) as! MovieViewCell
         
-        var posterImage: UIImage?
-        
-        if let posterImageData = movie.posterImage {
-            posterImage = UIImage(data: posterImageData)
-        }
-        
         var rating: String = ""
         if let avgVote = movie.avgVote {
             rating = String(avgVote)
         }
         
-        (cell as! MovieViewCell).setMovieData(name: movie.movieName, rating: rating, poster: posterImage)
+        (cell as! MovieViewCell).setMovieData(name: movie.movieName, rating: rating)
+        
         if let imagePath = movie.imagePath {
             (cell as! MovieViewCell).posterImage.sd_setImage(with: URL(string: imageBaseURL + imagePath), placeholderImage: UIImage(named: "MovieIcon.png"))
         }

@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import UIKit
 
 class Movie {
     let movieId: Int
     let movieName : String
     var avgVote : Float?
     var imagePath : String?
-    var posterImage : Data?
+    var posterImage : UIImage?
     var isCollection : Bool?
     var collectionID : Int?
     var overView : String?
